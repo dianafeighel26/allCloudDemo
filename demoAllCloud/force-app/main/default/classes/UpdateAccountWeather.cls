@@ -10,24 +10,24 @@ public class UpdateAccountWeather implements Database.Batchable<sObject>, Databa
         List<Account> accountsToUpdate = new List<Account>();
 
         for(Account account: accounts) {
-                List<Account> accountsByCity = new List<Account>();
-                if(cityWithAccounts.containsKey(account.BillingCity)) {
-                    accountsByCity = cityWithAccounts.get(account.BillingCity);
-                }
-                accountsByCity.add(account);
-                cityWithAccounts.put(account.BillingCity, accountsByCity);
+            List<Account> accountsByCity = new List<Account>();
+            if(cityWithAccounts.containsKey(account.BillingCity)) {
+                accountsByCity = cityWithAccounts.get(account.BillingCity);
+            }
+            accountsByCity.add(account);
+            cityWithAccounts.put(account.BillingCity, accountsByCity);
         }
 
         for(String city: cityWithAccounts.keySet()) {
-                if(!processedCitiesWithDescription.containsKey(city)) {
-                    String description = WeatherAPIService.getCurrentWeatherByCity(city);
-                    processedCitiesWithDescription.put(city, description);
+            if(!processedCitiesWithDescription.containsKey(city)) {
+                String description = WeatherAPIService.getCurrentWeatherByCity(city);
+                processedCitiesWithDescription.put(city, description);
+            }
+            for(Account account: cityWithAccounts.get(city)) {
+                if(account.AccountCurrentWeather__c != processedCitiesWithDescription.get(city)) {
+                    account.AccountCurrentWeather__c = processedCitiesWithDescription.get(city);
+                    accountsToUpdate.add(account);
                 }
-                for(Account account: cityWithAccounts.get(city)) {
-                    if(account.AccountCurrentWeather__c != processedCitiesWithDescription.get(city)) {
-                        account.AccountCurrentWeather__c = processedCitiesWithDescription.get(city);
-                        accountsToUpdate.add(account);
-                    }
             }
         }
 
