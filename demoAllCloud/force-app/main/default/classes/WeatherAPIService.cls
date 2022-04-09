@@ -4,7 +4,7 @@ global class WeatherAPIService {
         String description = '';
         HttpRequest req = new HttpRequest();
         if(!String.isBlank(city)) {
-            req.setEndpoint('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=bdfd1ae797dd41563633966fc1ab16c3');  
+            req.setEndpoint('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + ApiKey__mdt.getInstance('WeatherAPI').Key__c);  
         }
 
         req.setMethod('GET');
