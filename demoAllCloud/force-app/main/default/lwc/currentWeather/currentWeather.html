@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Weather"  icon-name="standard:account">
+        <template if:true={billingAddressCity}>
+            <div class="slds-m-around_medium">
+                <lightning-formatted-text value="Account Address:"></lightning-formatted-text>
+                <lightning-formatted-address
+                    street={billingAddressStreet}
+                    city={billingAddressCity}
+                    country={billingAddressCountry}
+                    postal-code={billingAddressPostalCode}>
+                </lightning-formatted-address>
+            </div>
+            <div class="slds-m-around_medium">
+                <lightning-formatted-text value="Account current weather description: "></lightning-formatted-text>
+                <lightning-formatted-rich-text
+                    value={currentWeather}>
+                </lightning-formatted-rich-text>
+            </div>
+        </template>
+    </lightning-card>
+</template>
